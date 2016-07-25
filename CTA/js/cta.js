@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var api_key = '4ffee39f79e54e19b75756aded7cb3d3';
   var arrivals_base_url = 'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx/';
-  var test_station_id = '30062';
+  //var test_station_id = '30062';
   $('#connect').click(function() {
     var request_url = arrivals_base_url + '?key=' + api_key;
-    request_url += '&stpid=' + test_station_id;
+    request_url += '&stpid=' + $('#stop-select').val();
     console.log(request_url);
     
     $.get(request_url, {
@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
       $(xml).find('eta').each(function() {
         var train = $(this);
         var trainHtml = '';
-        trainHtml += '<div class=result>' + train.find('prdt').text() + '</div>';
+        var arrivalTime = formatTime((train.find('arrT').text()).split(' ')[1]);
+        trainHtml += '<div class=result>' + arrivalTime + '</div>';
         trainHtml += '<hr>';
         console.log(train);
         resultsHtml += trainHtml;
@@ -64,8 +65,6 @@ function initStopSelector(lineId) {
         var csvResults = CSVToArray(allText, ',')
         var stopIndex = processHeader(csvResults[0], lineId);
         var csvResults = csvResults.slice(1);
-        console.log(stopIndex);
-        console.log(csvResults);
         for(var x in csvResults) {
           if(csvResults.hasOwnProperty(x)) {
             if(csvResults[x][stopIndex] == 'TRUE') {
@@ -80,8 +79,32 @@ function initStopSelector(lineId) {
 
 }
 
+function formatTime(timeString) {
+  var split = timeString.split(':');
+  var hours = split[0];
+  var minutes = split[1];
+  var ap;
+  if(hours >= 24) {
+    ap = 'AM';
+    formattedHours = hours - 24;
+  }
+  else if(hours >= 12) {
+    ap = 'PM';
+    formattedHours = hours - 12;
+  }
+  else {
+    ap = 'AM';
+    formattedHours = hours;
+  }
+  if(formattedHours == 0) {
+    formattedHours = 12;
+  }
+
+  formattedMinutes = ("0" + minutes).substr(-2);
+  return formattedHours + ':' + formattedMinutes + ' ' + ap;
+}
+
 function processHeader(header, lineId) {
-  console.log(header);
   return header.indexOf(lineId);
 }
 
