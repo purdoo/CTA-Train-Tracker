@@ -50,6 +50,7 @@ function initLineSelector() {
 }
 
 function initStopSelector(lineId) {
+  $('#stop-select').find('option').remove().end();
   var rawFile = new XMLHttpRequest();
   rawFile.open('GET', 'files/stops.csv', false);
   rawFile.onreadystatechange = function ()
@@ -58,23 +59,33 @@ function initStopSelector(lineId) {
     {
       if(rawFile.status === 200 || rawFile.status == 0)
       {
+        console.log(lineId);
         var allText = rawFile.responseText;
-        console.log(CSVToArray(allText), ',');
-        //console.log(allText.split('\n'));
-
+        var csvResults = CSVToArray(allText, ',')
+        var stopIndex = processHeader(csvResults[0], lineId);
+        var csvResults = csvResults.slice(1);
+        console.log(stopIndex);
+        console.log(csvResults);
+        for(var x in csvResults) {
+          if(csvResults.hasOwnProperty(x)) {
+            if(csvResults[x][stopIndex] == 'TRUE') {
+              $('<option value="'+ csvResults[x][0] + '">'+ csvResults[x][2] + '</option>').appendTo('#stop-select');
+            }
+          }
+        }
       }
     }
   }
   rawFile.send(null);
-  /*
-  Papa.parse("files/stops.csv", {
-    complete: function(results) {
-      console.log(results);
-    }
-  });*/
+
 }
 
-function CSVToArray( strData, strDelimiter ){
+function processHeader(header, lineId) {
+  console.log(header);
+  return header.indexOf(lineId);
+}
+
+function CSVToArray( strData, strDelimiter ) {
   // Check to see if the delimiter is defined. If not,
   // then default to comma.
   strDelimiter = (strDelimiter || ",");
