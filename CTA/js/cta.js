@@ -10,27 +10,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     $.get(request_url, {
     }).done( function (xml) {
-      console.log(xml);
+      var resultsHtml = '';
       $(xml).find('eta').each(function() {
         var train = $(this);
+        var trainHtml = '';
+        trainHtml += '<div class=result>' + train.find('prdt').text() + '</div>';
+        trainHtml += '<hr>';
         console.log(train);
-        console.log(train.find('prdt').text());
+        resultsHtml += trainHtml;
       });
+      $('#results').html(resultsHtml);
     });
   });
 
 }, false);
 
-/*
-function connect(url) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4) {
-      // innerText does not let the attacker inject HTML elements.
-      var response = xhr.responseXML;
-      
-    }
-  }
-  xhr.send();
-}*/
