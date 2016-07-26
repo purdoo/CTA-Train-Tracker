@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var request_url = arrivals_base_url + '?key=' + api_key;
     //request_url += '&stpid=' + $('#stop-select').val(); // using stop id 
     request_url += '&mapid=' + $('#stop-select').val(); // using parent stop id instead
-    console.log(request_url);
     
     $.get(request_url, {
     }).done( function (xml) {
@@ -24,17 +23,23 @@ document.addEventListener('DOMContentLoaded', function() {
       $(xml).find('eta').each(function() {
         var train = $(this);
         var trainHtml = '';
+        // run (used for matching message headers and bodies)
+        var run = train.find('rn').text();
         // train end station
-        var destination = train.find('stpDe').text();
+        var destination = train.find('destNm').text();
         // time until train will get to station
         var timeOut = getTimeOut((train.find('arrT').text()).split(' ')[1]);
         // arrival time (formatted)
         var arrivalTime = formatTime((train.find('arrT').text()).split(' ')[1]);
-        
+        // stop detail
+        var detail = train.find('stpDe').text();
         // result header
-        trainHtml += '<div class=result-header>' + destination + ' - ' + timeOut + ' minutes</div>';
+        var headerText =  destination + ' - ' + timeOut;
+        trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + ' minutes</div>';
         // result body
-        trainHtml += '<div class=result-body>' + arrivalTime + '</div>';
+        var descriptionHtml = '<div class="arrival-time">' + detail + '</div>';
+        var arrivalHtml = '<div class="arrival-time">Arriving at ' + arrivalTime + '</div>';
+        trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + arrivalHtml + '</div>';
         trainHtml += '<hr>';
 
         resultsHtml += trainHtml;
@@ -43,14 +48,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  $(document).on('click', '.result-header', function () {
+    var id = (this.id);
+    var target = (this.id).replace('header','body');
+    $('#' + target).slideToggle('fast');
+  });
+
+
   function getTimeOut(arrivalTime) {
     console.log(arrivalTime);
     var split = arrivalTime.split(':');
     var arrivalMinutes = (parseInt(split[0]) * 60) + parseInt(split[1]);
     var d = new Date();
     var currentMinutes = (d.getHours()) * 60 + d.getMinutes(); 
-    console.log(arrivalMinutes);
-    console.log(currentMinutes);
     return arrivalMinutes - currentMinutes;
   }
 
@@ -104,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 }, false);
-
 
 
 function formatTime(timeString) {
