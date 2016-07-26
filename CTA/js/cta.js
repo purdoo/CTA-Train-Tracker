@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var api_key = '4ffee39f79e54e19b75756aded7cb3d3';
   var arrivals_base_url = 'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx/';
-  //var test_station_id = '30062';
+
+  // 'submit' function
   $('#connect').click(function() {
     console.log(parentMapping);
     var request_url = arrivals_base_url + '?key=' + api_key;
-    request_url += '&stpid=' + $('#stop-select').val();
+    //request_url += '&stpid=' + $('#stop-select').val(); // using stop id 
+    request_url += '&mapid=' + $('#stop-select').val(); // using parent stop id instead
     console.log(request_url);
     
     $.get(request_url, {
@@ -22,15 +24,35 @@ document.addEventListener('DOMContentLoaded', function() {
       $(xml).find('eta').each(function() {
         var train = $(this);
         var trainHtml = '';
+        // train end station
+        var destination = train.find('stpDe').text();
+        // time until train will get to station
+        var timeOut = getTimeOut((train.find('arrT').text()).split(' ')[1]);
+        // arrival time (formatted)
         var arrivalTime = formatTime((train.find('arrT').text()).split(' ')[1]);
-        trainHtml += '<div class=result>' + arrivalTime + '</div>';
+        
+        // result header
+        trainHtml += '<div class=result-header>' + destination + ' - ' + timeOut + ' minutes</div>';
+        // result body
+        trainHtml += '<div class=result-body>' + arrivalTime + '</div>';
         trainHtml += '<hr>';
-        console.log(train);
+
         resultsHtml += trainHtml;
       });
       $('#results').html(resultsHtml);
     });
   });
+
+  function getTimeOut(arrivalTime) {
+    console.log(arrivalTime);
+    var split = arrivalTime.split(':');
+    var arrivalMinutes = (parseInt(split[0]) * 60) + parseInt(split[1]);
+    var d = new Date();
+    var currentMinutes = (d.getHours()) * 60 + d.getMinutes(); 
+    console.log(arrivalMinutes);
+    console.log(currentMinutes);
+    return arrivalMinutes - currentMinutes;
+  }
 
   function initLineSelector() {
     var lines = {
