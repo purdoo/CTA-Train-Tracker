@@ -16,13 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var request_url = arrivals_base_url + '?key=' + api_key;
     //request_url += '&stpid=' + $('#stop-select').val(); // using stop id 
     request_url += '&mapid=' + $('#stop-select').val(); // using parent stop id instead
-    
+    // build out the results header
+    var resultHeader = 'Arrivals at ' + $('#stop-select option:selected').text();
     $.get(request_url, {
     }).done( function (xml) {
-      var resultsHtml = '';
+      var resultsHtml = '<h4>' + resultHeader + '</h4><hr>';
       $(xml).find('eta').each(function() {
         var train = $(this);
         var trainHtml = '';
+
         // run (used for matching message headers and bodies)
         var run = train.find('rn').text();
         // train end station
@@ -33,13 +35,30 @@ document.addEventListener('DOMContentLoaded', function() {
         var arrivalTime = formatTime((train.find('arrT').text()).split(' ')[1]);
         // stop detail
         var detail = train.find('stpDe').text();
-        // result header
+        // route
+        var route = train.find('rt').text();
+        // various flags
+        var isApproaching = train.find('isApp').text();
+        var isSchedule = train.find('isSch').text();
+        var isDelayed = train.find('isDly').text();
+        var isFaulty = train.find('isFlt').text();
+
+        // building result header
+        if(isApproaching == '1') {
+          timeOut = 'Due';
+        }
         var headerText =  destination + ' - ' + timeOut;
-        trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + ' minutes</div>';
-        // result body
+        trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + '</div>';
+        
+        // building result body
         var descriptionHtml = '<div class="arrival-desc">' + detail + '</div>';
+        var routeHtml = '<div class="route-text">' + route + ' Line</div>';
         var arrivalHtml = '<div class="arrival-time">Arriving at ' + arrivalTime + '</div>';
-        trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + arrivalHtml + '</div>';
+        var scheduledNote = '';
+        if(isSchedule == 1) {
+          scheduledNote = '<div class="notice">* Live Data Not Available, Using Scheduled Times</div>'
+        }
+        trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + routeHtml + arrivalHtml + scheduledNote + '</div>';
         trainHtml += '<hr>';
 
         resultsHtml += trainHtml;
@@ -61,7 +80,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var arrivalMinutes = (parseInt(split[0]) * 60) + parseInt(split[1]);
     var d = new Date();
     var currentMinutes = (d.getHours()) * 60 + d.getMinutes(); 
-    return arrivalMinutes - currentMinutes;
+    var timeOutText = (arrivalMinutes - currentMinutes) + ' minute';
+    if((arrivalMinutes - currentMinutes) > 1) {
+      timeOutText += 's'
+    }
+    return timeOutText;
   }
 
   /* Hard-coded values for the line select */

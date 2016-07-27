@@ -17,6 +17,7 @@
   ],
   "permissions": [
     "activeTab",
-    "http://lapi.transitchicago.com/"
+    "http://lapi.transitchicago.com/",
+    "storage"
    ]
 }
