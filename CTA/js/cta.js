@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var headerText =  destination + ' - ' + timeOut;
         trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + ' minutes</div>';
         // result body
-        var descriptionHtml = '<div class="arrival-time">' + detail + '</div>';
+        var descriptionHtml = '<div class="arrival-desc">' + detail + '</div>';
         var arrivalHtml = '<div class="arrival-time">Arriving at ' + arrivalTime + '</div>';
         trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + arrivalHtml + '</div>';
         trainHtml += '<hr>';
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return arrivalMinutes - currentMinutes;
   }
 
+  /* Hard-coded values for the line select */
   function initLineSelector() {
     var lines = {
       "Select a Line":"-",
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  /* Parses a csv file to populate the stop selector based on the active option in the line selector */
   function initStopSelector(lineId) {
     $('#stop-select').find('option').remove().end();
     var rawFile = new XMLHttpRequest();
@@ -115,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 }, false);
 
-
+/* Format a 24h time string (hh:mm:ss) to a 12h AM/PM string */
 function formatTime(timeString) {
   var split = timeString.split(':');
   var hours = split[0];
@@ -137,7 +139,7 @@ function formatTime(timeString) {
     formattedHours = 12;
   }
 
-  formattedMinutes = ("0" + minutes).substr(-2);
+  formattedMinutes = ('0' + minutes).substr(-2);
   return formattedHours + ':' + formattedMinutes + ' ' + ap;
 }
 
@@ -145,6 +147,8 @@ function processHeader(header, lineId) {
   return header.indexOf(lineId);
 }
 
+
+/* Hacky Javascript CSV Parser */ 
 function CSVToArray( strData, strDelimiter ) {
   // Check to see if the delimiter is defined. If not,
   // then default to comma.
