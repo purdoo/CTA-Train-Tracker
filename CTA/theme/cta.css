@@ -2,15 +2,65 @@ body {
   width:300px;
 }
 
+.borderless {
+  padding: 0px;
+  margin: 0px;
+}
+/*
+hr-borderless {
+  border: 0;
+  border-top: 1px solid #eeeeee;
+}
+*/
 #connect {
   margin-bottom: 20px;
 }
 
 .results {
   padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.result-header {
+  padding-left: 5px;
+  font-weight: bold;
 }
 
 .result-body {
   display : none;
-  padding-left: 5px;
+  padding-left: 15px;
+}
+
+
+
+/* Route Colors */
+.Red {
+  background-color: red;
+  color: white;
+}
+.Blue {
+  background-color: blue;
+  color: white;
+}
+.P {
+  background-color: purple;
+  color: white;
+}
+.Brn {
+  background-color: saddlebrown;
+  color: white;
+}
+.Y {
+  background-color: yellow;
+}
+.G {
+  background-color: green;
+  color: white;
+}
+.Org {
+  background-color: orange;
+}
+.Pink {
+  background-color: pink;
 }

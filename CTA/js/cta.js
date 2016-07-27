@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
           timeOut = 'Due';
         }
         var headerText =  destination + ' - ' + timeOut;
+        trainHtml += '<div class="result ' + route + '">'
         trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + '</div>';
         
         // building result body
@@ -59,11 +60,12 @@ document.addEventListener('DOMContentLoaded', function() {
           scheduledNote = '<div class="notice">* Live Data Not Available, Using Scheduled Times</div>'
         }
         trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + routeHtml + arrivalHtml + scheduledNote + '</div>';
-        trainHtml += '<hr>';
+        trainHtml += '</div>';
+        trainHtml += '<hr class="borderless">';
 
         resultsHtml += trainHtml;
       });
-      $('#results').html(resultsHtml);
+      $('#results').html(resultsHtml + '<br>');
     });
   });
 
