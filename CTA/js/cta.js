@@ -53,13 +53,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // building result body
         var descriptionHtml = '<div class="arrival-desc">' + detail + '</div>';
-        var routeHtml = '<div class="route-text">' + route + ' Line</div>';
+        var routeHtml = '<div class="route-text">' + route + ' Line</div>'; // not currently used
         var arrivalHtml = '<div class="arrival-time">Arriving at ' + arrivalTime + '</div>';
         var scheduledNote = '';
         if(isSchedule == 1) {
           scheduledNote = '<div class="notice">* Live Data Not Available, Using Scheduled Times</div>'
         }
-        trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + routeHtml + arrivalHtml + scheduledNote + '</div>';
+        trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + arrivalHtml + scheduledNote + '</div>';
         trainHtml += '</div>';
         trainHtml += '<hr class="borderless">';
 
@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  /* Toggle Result Divs */
   $(document).on('click', '.result-header', function () {
     var id = (this.id);
     var target = (this.id).replace('header','body');
