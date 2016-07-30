@@ -27,9 +27,15 @@ hr-borderless {
   font-weight: bold;
 }
 
+.result-header:hover {
+  font-size: 120%;
+  cursor: pointer;
+}
+
 .result-body {
   display : none;
   padding-left: 15px;
+  
 }
 
 
