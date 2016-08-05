@@ -126,24 +126,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 }, false); // dom load
 
-  /* Hard-coded values for the line select */
-  function initLineSelector() {
-    var lines = {
-      "Select a Line":"-",
-      "Red Line":"RED",
-      "Blue Line":"BLUE",
-      "Green Line":"G",
-      "Brown Line":"BRN",
-      "Purple Line (Non Express)":"P",
-      "Yellow Line":"Y",
-      "Pink Line (Non Express)":"Pnk",
-      "Orange Line":"O"
-    };
-    for(var line in lines) {
-      $('<option value="'+ lines[line] + '">'+ line + '</option>').appendTo('#line-select');
-    }
-    console.log('done init line select');
+/* Hard-coded values for the line select */
+function initLineSelector(target = 'line-select') {
+  var lines = {
+    "Select a Line":"-",
+    "Red Line":"RED",
+    "Blue Line":"BLUE",
+    "Green Line":"G",
+    "Brown Line":"BRN",
+    "Purple Line (Non Express)":"P",
+    "Yellow Line":"Y",
+    "Pink Line (Non Express)":"Pnk",
+    "Orange Line":"O"
+  };
+  for(var line in lines) {
+    $('<option value="'+ lines[line] + '">'+ line + '</option>').appendTo('#' + target);
   }
+  console.log('done init line select');
+}
 
 /* Format a 24h time string (hh:mm:ss) to a 12h AM/PM string */
 function formatTime(timeString) {
