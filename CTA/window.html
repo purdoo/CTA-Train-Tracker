@@ -4,18 +4,20 @@
     <title>CTA</title>
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/cta.js"></script>
-    <script src="js/saved-data.js"></script>
+    <script src="js/stored-data.js"></script>
+    <!--<script src="js/saved-data.js"></script>-->
     <link rel="stylesheet" type="text/css" href="theme/cta.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body>
     <div class="container">
       <h2>CTA Train Tracker</h2>
+      <!--
       <div class="btn-group">
         <button type="button" class="btn btn-primary" id="search-button">Search</button>
         <button type="button" class="btn btn-primary" id="saved-button">Saved</button>
         <button type="button" class="btn btn-primary">User</button>
-      </div>
+      </div> -->
       <hr>
       <div id="search-form">
         <div class="form-group">
@@ -24,9 +26,14 @@
         <div class="form-group">
           <select id="stop-select" class="form-control"></select>
         </div>
-        <button id="connect" class="btn btn-primary">Get Live Train Data</button>
+        <div class="btn-group">
+          <button id="get-arrivals" class="btn btn-primary">Get Live Arrivals</button>
+          <button id="save-button" class="btn btn-primary" >Save Station</button>
+        </div>
+        
         <div id="results"></div>
       </div>
+      <!--
       <div id="saved-form" style="display:none">
         <h3>Save Station</h3>
         <div class="form-group">
@@ -36,7 +43,7 @@
           <select id="stop-select-save" class="form-control"></select>
         </div>
         <button id="save" class="btn btn-primary">Save</button>
-      </div>
+      </div> -->
       <div id="footer"></div>
     </div>
   </body>

@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var api_key = '4ffee39f79e54e19b75756aded7cb3d3';
   var arrivals_base_url = 'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx/';
-
+  
   // 'submit' function
-  $('#connect').click(function() {
+  $('#get-arrivals').click(function() {
     console.log(parentMapping);
     var request_url = arrivals_base_url + '?key=' + api_key;
     //request_url += '&stpid=' + $('#stop-select').val(); // using stop id 
