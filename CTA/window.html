@@ -12,12 +12,11 @@
   <body>
     <div class="container">
       <h2>CTA Train Tracker</h2>
-      <!--
+      
       <div class="btn-group">
-        <button type="button" class="btn btn-primary" id="search-button">Search</button>
-        <button type="button" class="btn btn-primary" id="saved-button">Saved</button>
-        <button type="button" class="btn btn-primary">User</button>
-      </div> -->
+        <button type="button" class="btn btn-primary" id="search-form-button">Search</button>
+        <button type="button" class="btn btn-primary" id="save-form-button">User</button>
+      </div>
       <hr>
       <div id="search-form">
         <div class="form-group">
@@ -33,17 +32,15 @@
         
         <div id="results"></div>
       </div>
-      <!--
-      <div id="saved-form" style="display:none">
-        <h3>Save Station</h3>
-        <div class="form-group">
-          <select id="line-select-save" class="form-control"></select>
+      
+      <div id="user-form" style="display:none">
+        <h3>Saved Stations</h3>
+        <div id="saved-results"></div>
+        <div class="btn-group">
+          <button id="clear-stations" class="btn btn-danger">Clear Saved Stations</button>
+          <button id="check-stations" class="btn btn-danger">Check</button>
         </div>
-        <div class="form-group">
-          <select id="stop-select-save" class="form-control"></select>
-        </div>
-        <button id="save" class="btn btn-primary">Save</button>
-      </div> -->
+      </div> 
       <div id="footer"></div>
     </div>
   </body>

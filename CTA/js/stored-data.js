@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // on page load behavior
+  chrome.storage.sync.get(['savedRoutes'], function(storedRoutes) {
+    for(s in storedRoutes) {
+      console.log(storedRoutes[s]);
+    }
+  });
+  //var storedRoutesHtml = 
+  
+ 
+  
+  // onclick toggles for our different forms
+  $('#search-form-button').on('click', function(event) {
+    $('#search-form').toggle(true);
+    $('#user-form').toggle(false);
+  });
+  $('#save-form-button').on('click', function(event) {
+    $('#search-form').toggle(false);
+    $('#user-form').toggle(true);
+  });
+  
+   // onclick for saving a station
   $('#save-button').click(function() {
     // check to see if stations select is populated
 
@@ -16,14 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
       var jsonObj = {};
       jsonObj['savedRoutes'] = array;
       chrome.storage.sync.set(jsonObj, function() {
-        console.log('Settings saved');
+        //console.log('Settings saved');
       });
     });
-    /*
-    chrome.storage.sync.set({'value': theValue}, function() {
-      // Notify that we saved.
-      console.log('Settings saved');
-    });*/
+    
   });
 
 }, false); // end domcontentloaded
