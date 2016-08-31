@@ -51,13 +51,24 @@ document.addEventListener('DOMContentLoaded', function() {
     chrome.storage.sync.get(['savedRoutes'], function(result) {
       console.log(result);
       var saved = result['savedRoutes'] ? result['savedRoutes'] : {};
-      saved[$('#stop-select').val()]['stopName'] = $('#stop-select option:selected').text();
-      saved[$('#stop-select').val()]['lineName'] = $('#line-select option:selected').text();
+      console.log(saved);
+      var savedObject = {
+        stopName : $('#stop-select option:selected').text(),
+        lineName : $('#line-select option:selected').text()
+      }
+      let stopId = String($('#stop-select').val());
+      saved[stopId] = savedObject;
+      /*
+      var stationMapping = {};
+      let stopId = String($('#stop-select').val());
+      stationMapping[stopId]['stopName'] = $('#stop-select option:selected').text();
+      stationMapping[stopId]['lineName'] = $('#line-select option:selected').text();
+      */
       //var array = result['savedRoutes'] ? result['savedRoutes'] : [];
       //array.unshift($('#stop-select').val());
 
       var jsonObj = {};
-      jsonObj['savedRoutes'] = array;
+      jsonObj['savedRoutes'] = saved;
       chrome.storage.sync.set(jsonObj, function() {
         console.log('Settings saved');
       });
@@ -68,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
   $('#clear-stations').click(function() {
     // careful with this
     var jsonObj = {};
-    jsonObj['savedRoutes'] = [];
+    jsonObj['savedRoutes'] = {};
     chrome.storage.sync.set(jsonObj, function() {
       console.log('Settings Cleared');
     });
