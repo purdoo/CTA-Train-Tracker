@@ -1,3 +1,5 @@
+// not currently being used
+
 document.addEventListener('DOMContentLoaded', function() {
   console.log('saved-data.js loaded');
   $('#search-button').on('click', function(event) {
@@ -24,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
     rawFile.onreadystatechange = function () {
       if(rawFile.readyState === 4) {
         if(rawFile.status === 200 || rawFile.status == 0) {
-          console.log(lineId);
           var allText = rawFile.responseText;
           var csvResults = CSVToArray(allText, ',')
           var stopIndex = processHeader(csvResults[0], lineId);

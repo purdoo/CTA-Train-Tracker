@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $.get(request_url, {
       // wait for the callback
     }).done( function (xml) {
+      console.log(xml);
       var resultsHtml = '<h4>' + resultHeader + '</h4><hr>';
       $(xml).find('eta').each(function() {
         var train = $(this);
