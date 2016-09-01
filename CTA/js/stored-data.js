@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
   $('#search-form-button').on('click', function(event) {
     $('#search-form').toggle(true);
     $('#user-form').toggle(false);
+    $('#search-form-button').addClass('active');
+    $('#user-form-button').removeClass('active');
   });
   $('#user-form-button').on('click', function(event) {
     $('#search-form').toggle(false);
@@ -22,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('loading save form');
     loadUserForm();
     $('#save-button').prop('disabled', false);
+    $('#user-form-button').addClass('active');
+    $('#search-form-button').removeClass('active');
   });
   
   // runs every time the user preferences page is loaded/opened

@@ -7,16 +7,18 @@
     <script src="js/cta.js"></script>
     <script src="js/stored-data.js"></script>
     <!--<script src="js/saved-data.js"></script>-->
-    <link rel="stylesheet" type="text/css" href="theme/cta.css">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="theme/cta.css">
   </head>
   <body>
     <div class="container">
       <h2>CTA Train Tracker</h2>
-      
-      <div class="btn-group">
-        <button type="button" class="btn button-min btn-default " id="search-form-button">Search</button>
-        <button type="button" class="btn btn-default button-min" id="user-form-button">User</button>
+      <div class="btn-group btn-group-justified" role="group" style="padding-bottom: 20px;">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default active" id="search-form-button">Search</button>
+          <button type="button" class="btn btn-default" id="user-form-button">User</button>
+        </div>
       </div>
       <hr>
       <div id="search-form">
