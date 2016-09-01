@@ -23,17 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
     loadUserForm();
   });
   
-  var loadUserForm = function() { 
+  // runs every time the user preferences page is loaded/opened
+  var loadUserForm = function() {
+    $('#saved-results').html('');
     chrome.storage.sync.get(['savedRoutes'], function(data) {
       let savedRoutes = data['savedRoutes'];
       for(var s in savedRoutes) {
-        console.log(savedRoutes[s]);
-        $.ajax({
-          url: 'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx/' + '?key=' + api_key + '&mapid=' + savedRoutes[s],
-          success: function (result) {
-          },
-          async: false
-        });
+        var savedRouteHtml = '';
+        savedRouteHtml += '<div class="saved-result">' + savedRoutes[s].stopName + ' (' + savedRoutes[s].lineName + ')</div>';
+        $('#saved-results').append(savedRouteHtml);
       }
     }); 
   };
@@ -58,14 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       let stopId = String($('#stop-select').val());
       saved[stopId] = savedObject;
-      /*
-      var stationMapping = {};
-      let stopId = String($('#stop-select').val());
-      stationMapping[stopId]['stopName'] = $('#stop-select option:selected').text();
-      stationMapping[stopId]['lineName'] = $('#line-select option:selected').text();
-      */
-      //var array = result['savedRoutes'] ? result['savedRoutes'] : [];
-      //array.unshift($('#stop-select').val());
 
       var jsonObj = {};
       jsonObj['savedRoutes'] = saved;
@@ -82,7 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
     jsonObj['savedRoutes'] = {};
     chrome.storage.sync.set(jsonObj, function() {
       console.log('Settings Cleared');
+      loadUserForm();
     });
+    
   });
 
   // clearing saved preferences (dev)

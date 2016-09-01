@@ -28,7 +28,7 @@ hr-borderless {
 }
 
 .result-header:hover {
-  font-size: 120%;
+  /*font-size: 120%;*/
   cursor: pointer;
 }
 
