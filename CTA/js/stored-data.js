@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#user-form').toggle(true);
     console.log('loading save form');
     loadUserForm();
+    $('#save-button').prop('disabled', false);
   });
   
   // runs every time the user preferences page is loaded/opened
@@ -39,30 +40,30 @@ document.addEventListener('DOMContentLoaded', function() {
    // saving a station
   $('#save-button').click(function() {
     // check to see if stations select is populated
+    if($('#line-select').val() != '-') {
+      // disable the button
+      $('#save-button').prop('disabled', true);
 
-    // disable the button
-    $('#save-button').prop('disabled', true);
-    console.log('save button clicked');
-    console.log($('#stop-select').val());
+      // check to see what preferences the user already has saved
+      chrome.storage.sync.get(['savedRoutes'], function(result) {
+        console.log(result);
+        var saved = result['savedRoutes'] ? result['savedRoutes'] : {};
+        console.log(saved);
+        var savedObject = {
+          stopName : $('#stop-select option:selected').text(),
+          lineName : $('#line-select option:selected').text()
+        }
+        let stopId = String($('#stop-select').val());
+        saved[stopId] = savedObject;
 
-    // check to see what preferences the user already has saved
-    chrome.storage.sync.get(['savedRoutes'], function(result) {
-      console.log(result);
-      var saved = result['savedRoutes'] ? result['savedRoutes'] : {};
-      console.log(saved);
-      var savedObject = {
-        stopName : $('#stop-select option:selected').text(),
-        lineName : $('#line-select option:selected').text()
-      }
-      let stopId = String($('#stop-select').val());
-      saved[stopId] = savedObject;
-
-      var jsonObj = {};
-      jsonObj['savedRoutes'] = saved;
-      chrome.storage.sync.set(jsonObj, function() {
-        console.log('Settings saved');
+        var jsonObj = {};
+        jsonObj['savedRoutes'] = saved;
+        chrome.storage.sync.set(jsonObj, function() {
+          console.log('Settings saved');
+        });
       });
-    });
+    }
+    
   });
 
   // clearing saved preferences

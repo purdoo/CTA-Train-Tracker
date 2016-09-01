@@ -38,7 +38,14 @@ hr-borderless {
   
 }
 
-
+/* Styling Buttons */
+.button-min {
+  border-bottom-right-radius:0;
+  border-top-right-radius:0;
+  background:none;
+  border: 0,0,2px,0;
+  border-bottom-color:#0054a4;
+}
 
 /* Route Colors */
 .Red {
