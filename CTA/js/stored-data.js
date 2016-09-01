@@ -31,11 +31,27 @@ document.addEventListener('DOMContentLoaded', function() {
       let savedRoutes = data['savedRoutes'];
       for(var s in savedRoutes) {
         var savedRouteHtml = '';
-        savedRouteHtml += '<div class="saved-result">' + savedRoutes[s].stopName + ' (' + savedRoutes[s].lineName + ')</div>';
+        savedRouteHtml += '<div class="saved-result accord" id="saved-header-'+ s +'">' + savedRoutes[s].stopName + ' (' + savedRoutes[s].lineName + ')</div>';
+        savedRouteHtml += '<div class="saved-result-body" id="saved-body-'+ s +'">Sly Widget Goes Here</div>';
+        //savedRouteHtml += '<div class="saved-result accord">' + savedRoutes[s].stopName + ' (' + savedRoutes[s].lineName + ')</div>';
+        //savedRouteHtml += '<div class="saved-result-body">Sly Widget Goes Here</div>';
         $('#saved-results').append(savedRouteHtml);
       }
     }); 
   };
+  // load sly widget for the train
+  $(document).on('click', '.saved-result', function () {
+    // close every tab to ensure the accordion effect
+    for (c=0;c<$('.accord').length;c++){
+      var bodyId = $('.accord')[c].id.replace('header','body');
+      //console.log(bodyId);
+      $("#"+bodyId).toggle(false);
+    }
+    var id = (this.id);
+    var target = (this.id).replace('header','body');
+    $('#' + target).slideToggle('fast');
+    
+  });
 
    // saving a station
   $('#save-button').click(function() {

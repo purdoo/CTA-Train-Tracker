@@ -35,15 +35,16 @@ hr-borderless {
 .result-body {
   display : none;
   padding-left: 15px;
-  
+}
+
+.saved-result-body {
+  display : none;
 }
 
 /* Styling Buttons */
 .button-min {
-  border-bottom-right-radius:0;
-  border-top-right-radius:0;
   background:none;
-  border: 0,0,2px,0;
+  border: 0,0,2,0;
   border-bottom-color:#0054a4;
 }
 
