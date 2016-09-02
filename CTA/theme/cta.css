@@ -53,6 +53,20 @@ hr-borderless {
   box-shadow: none;
 }
 
+.btn-group-justified .btn-group .btn:focus {
+  color: #0054a4;
+  border-bottom-color: #0054a4;
+  background: none;
+  box-shadow: none;
+}
+.btn-group-justified .btn-group .btn:hover {
+  color: #0054a4;
+  border-bottom-color: #0054a4;
+  background: none;
+  box-shadow: none;
+}
+
+
 .btn-group-justified .btn-group .btn {
   width: auto;
   padding: 10px 35px;
