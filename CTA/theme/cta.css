@@ -16,6 +16,10 @@ hr-borderless {
   margin-bottom: 20px;
 }
 
+#search-form {
+  margin-bottom: 20px;
+}
+
 .results {
   padding-top: 20px;
   padding-bottom: 20px;
