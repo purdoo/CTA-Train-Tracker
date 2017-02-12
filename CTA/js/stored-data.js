@@ -1,16 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   var api_key = '4ffee39f79e54e19b75756aded7cb3d3';
-  // on page load behavior
-  /*
-  chrome.storage.sync.get(['savedRoutes'], function(data) {
-    console.log('saved routes:');
-    console.log(data['savedRoutes']);
-    
-  });*/
-  //var storedRoutesHtml = 
-  
-  
-  
+
   // onclick toggles for our different forms
   $('#search-form-button').on('click', function(event) {
     $('#search-form').toggle(true);
@@ -27,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#user-form-button').addClass('active');
     $('#search-form-button').removeClass('active');
   });
-  
+
   // runs every time the user preferences page is loaded/opened
   var loadUserForm = function() {
     $('#saved-results').html('');
@@ -41,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         //savedRouteHtml += '<div class="saved-result-body">Sly Widget Goes Here</div>';
         $('#saved-results').append(savedRouteHtml);
       }
-    }); 
+    });
   };
   // load sly widget for the train
   $(document).on('click', '.saved-result', function () {
@@ -54,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var id = (this.id);
     var target = (this.id).replace('header','body');
     $('#' + target).slideToggle('fast');
-    
+
   });
 
    // saving a station
@@ -83,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
     }
-    
+
   });
 
   // clearing saved preferences
@@ -95,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Settings Cleared');
       loadUserForm();
     });
-    
+
   });
 
   // clearing saved preferences (dev)
