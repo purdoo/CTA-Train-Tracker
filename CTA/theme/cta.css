@@ -1,3 +1,5 @@
+/* I don't know shit about CSS */
+
 body {
   width:300px;
 }
@@ -68,6 +70,7 @@ hr-borderless {
   border-bottom-color: #0054a4;
   background: none;
   box-shadow: none;
+  outline:none;
 }
 
 
@@ -77,6 +80,7 @@ hr-borderless {
   border: solid transparent;
   border-width: 0 0 2px 0;
   border-radius: 0;
+  outline:none;
 }
 
 

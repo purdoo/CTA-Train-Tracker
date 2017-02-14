@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function renderStopSelect(lineStops) {
-    console.log(lineStops);
     // Wipe out previous results
     $('#stop-select').find('option').remove().end();
     parentIds = [];
@@ -35,51 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
     $.get(request_url, {
       // wait for the callback
     }).done( function (xml) {
-      console.log(xml);
       var resultsHtml = '<h4>' + resultHeader + '</h4><hr>';
-      $(xml).find('eta').each(function() {
-        var train = $(this);
-        var trainHtml = '';
-        // run (used for matching message headers and bodies)
-        var run = train.find('rn').text();
-        // train end station
-        var destination = train.find('destNm').text();
-        // time until train will get to station
-        var timeOut = getTimeOut((train.find('arrT').text()).split(' ')[1]);
-        // arrival time (formatted)
-        var arrivalTime = formatTime((train.find('arrT').text()).split(' ')[1]);
-        // stop detail
-        var detail = train.find('stpDe').text();
-        // route
-        var route = train.find('rt').text();
-        // various flags
-        var isApproaching = train.find('isApp').text();
-        var isSchedule = train.find('isSch').text();
-        var isDelayed = train.find('isDly').text();
-        var isFaulty = train.find('isFlt').text();
-
-        // building result header
-        if(isApproaching == '1') {
-          timeOut = 'Due';
-        }
-        var headerText =  destination + ' - ' + timeOut;
-        trainHtml += '<div class="result ' + route + '">'
-        trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + '</div>';
-
-        // building result body
-        var descriptionHtml = '<div class="arrival-desc">' + detail + '</div>';
-        var routeHtml = '<div class="route-text">' + route + ' Line</div>'; // not currently used
-        var arrivalHtml = '<div class="arrival-time">Arriving at ' + arrivalTime + '</div>';
-        var scheduledNote = '';
-        if(isSchedule == 1) {
-          scheduledNote = '<div class="notice">* Live Data Not Available, Using Scheduled Times</div>'
-        }
-        trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + arrivalHtml + scheduledNote + '</div>';
-        trainHtml += '</div>';
-        trainHtml += '<hr class="borderless">';
-
-        resultsHtml += trainHtml;
-      });
+      resultsHtml += renderArrivalResults(xml);
       $('#results').html(resultsHtml + '<br>');
     });
   });
@@ -90,20 +46,64 @@ document.addEventListener('DOMContentLoaded', function() {
     var target = (this.id).replace('header','body');
     $('#' + target).slideToggle('fast');
   });
-
-
-  function getTimeOut(arrivalTime) {
-    console.log(arrivalTime);
-    var split = arrivalTime.split(':');
-    var arrivalMinutes = (parseInt(split[0]) * 60) + parseInt(split[1]);
-    var d = new Date();
-    var currentMinutes = (d.getHours()) * 60 + d.getMinutes();
-    var timeOutText = (arrivalMinutes - currentMinutes) + ' minute';
-    if((arrivalMinutes - currentMinutes) > 1) {
-      timeOutText += 's'
-    }
-    return timeOutText;
-  }
-
-
 }, false); // dom load
+
+function renderArrivalResults(xml) {
+  resultsHtml = '';
+  $(xml).find('eta').each(function() {
+    var train = $(this);
+    var trainHtml = '';
+    // run (used for matching message headers and bodies)
+    var run = train.find('rn').text();
+    // train end station
+    var destination = train.find('destNm').text();
+    // time until train will get to station
+    var timeOut = getTimeOut((train.find('arrT').text()).split(' ')[1]);
+    // arrival time (formatted)
+    var arrivalTime = formatTime((train.find('arrT').text()).split(' ')[1]);
+    // stop detail
+    var detail = train.find('stpDe').text();
+    // route
+    var route = train.find('rt').text();
+    // various flags
+    var isApproaching = train.find('isApp').text();
+    var isSchedule = train.find('isSch').text();
+    var isDelayed = train.find('isDly').text();
+    var isFaulty = train.find('isFlt').text();
+
+    // building result header
+    if(isApproaching == '1') {
+      timeOut = 'Due';
+    }
+    var headerText =  destination + ' - ' + timeOut;
+    trainHtml += '<div class="result ' + route + '">'
+    trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + '</div>';
+
+    // building result body
+    var descriptionHtml = '<div class="arrival-desc">' + detail + '</div>';
+    var routeHtml = '<div class="route-text">' + route + ' Line</div>'; // not currently used
+    var arrivalHtml = '<div class="arrival-time">Arriving at ' + arrivalTime + '</div>';
+    var scheduledNote = '';
+    if(isSchedule == 1) {
+      scheduledNote = '<div class="notice">* Live Data Not Available, Using Scheduled Times</div>'
+    }
+    trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + arrivalHtml + scheduledNote + '</div>';
+    trainHtml += '</div>';
+    trainHtml += '<hr class="borderless">';
+
+    resultsHtml += trainHtml;
+  });
+  return resultsHtml;
+}
+
+function getTimeOut(arrivalTime) {
+  var split = arrivalTime.split(':');
+  var arrivalMinutes = (parseInt(split[0]) * 60) + parseInt(split[1]);
+  var d = new Date();
+  var currentMinutes = (d.getHours()) * 60 + d.getMinutes();
+  var timeOutText = (arrivalMinutes - currentMinutes) + ' minute';
+  if((arrivalMinutes - currentMinutes) > 1) {
+    timeOutText += 's'
+  }
+  return timeOutText;
+}

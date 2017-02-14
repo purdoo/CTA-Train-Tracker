@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   stop_data_url = 'https://data.cityofchicago.org/api/views/8pix-ypme/rows.xml?accessType=DOWNLOAD';
+  chrome.storage.sync.set({'apiKey':'4ffee39f79e54e19b75756aded7cb3d3'}, function() {
+    console.log('stored api key in chrome storage');
+  });
 }, false); // dom load
 
 /* Hard-coded values for the line select */
@@ -31,7 +34,6 @@ function loadStops() {
       // skip the first row
       if(index == 0) return;
 
-      // console.log($(this).find('stop_name').text());
       var stop = {};
       stop.stop_id = $(this).find('stop_id').text();
       stop.stop_name = $(this).find('stop_name').text();
@@ -56,7 +58,6 @@ function loadStops() {
 /* Returns stops that belong to a specified line */
 function getStopsByLine(lineId, stops) {
   lineStops = [];
-  console.log(stops);
   /* Faster than a forEach loop at the slight expense of readability */
   for (var i = 0; i < stops.length; i ++) {
     if(stops[i][lineId.toLowerCase()] == 'true') lineStops.push(stops[i]);
@@ -85,7 +86,6 @@ function formatTime(timeString) {
   if(formattedHours == 0) {
     formattedHours = 12;
   }
-
   formattedMinutes = ('0' + minutes).substr(-2);
   return formattedHours + ':' + formattedMinutes + ' ' + ap;
 }
