@@ -4,10 +4,10 @@
     <title>CTA</title>
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/sly.min.js"></script>
-    
-    <script src="js/init.js"></script>
-    <script src="js/cta.js"></script>
-    <script src="js/stored-data.js"></script>
+
+    <script src="src/init.js"></script>
+    <script src="src/cta.js"></script>
+    <script src="src/stored-data.js"></script>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -23,7 +23,7 @@
         </div>
       </div>
       <hr>
-      <div id="search-form">
+      <div id="search-form" class="container-form">
         <div class="form-group">
           <select id="line-select" class="form-control"></select>
         </div>
@@ -32,16 +32,16 @@
         </div>
         <div class="btn-group">
           <button id="get-arrivals" class="btn btn-primary">Get Live Arrivals</button>
-          <button id="save-button" class="btn btn-primary" >Save Station</button>
+          <button id="save-button" class="btn btn-primary">Save Station</button>
         </div>
 
         <div id="results"></div>
       </div>
 
-      <div id="user-form" style="display:none">
+      <div id="user-form" class="container-form" style="display:none">
         <h3>Saved Stations</h3>
         <div id="saved-results"></div>
-        <div class="btn-group">
+        <div class="btn-group" style="padding-top: 20px;">
           <button id="clear-stations" class="btn btn-danger">Clear Saved Stations</button>
           <button id="check-stations" class="btn btn-danger">Check</button>
         </div>

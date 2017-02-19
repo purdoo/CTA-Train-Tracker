@@ -24,31 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
     chrome.storage.sync.get(['savedRoutes'], function(data) {
       let savedRoutes = data['savedRoutes'];
       for(var s in savedRoutes) {
-        var savedRouteHtml = '';
-        savedRouteHtml += '<div class="saved-result accord" id="saved-header-'+ s +'">' + savedRoutes[s].stopName + ' (' + savedRoutes[s].lineName + ')</div>';
-
-        resultButtonHtml = '<button class="btn btn-primary result-button">Results</button>';
-        removeButtonHtml = '<button class="btn btn-primary delete-button">Delete</button>';
-        subscribeButtonHtml = '<button class="btn btn-primary subscribe-button">Subscribe</button>';
-        panelOptions = '<div class="well"><div class="btn-group">' + resultButtonHtml + removeButtonHtml + subscribeButtonHtml + '</div></div>';
-
-        savedRouteHtml += '<div class="saved-result-body" id="saved-body-'+ s +'" data-station-id="' + s + '">' + panelOptions + '</div>';
+        var iconHtml = '<span class="pull-right clickable"><i class="glyphicon glyphicon-remove"></i></span>';
+        var savedRouteHtml = '<div><button class="btn btn-default saved-result form-control" data-station-id="' + s + '">' + savedRoutes[s].stopName + ' (' + savedRoutes[s].lineName + ') ' + iconHtml + '</button></div>';
         $('#saved-results').append(savedRouteHtml);
       }
     });
   };
-  // load sly widget for the train
-  $(document).on('click', '.saved-result', function () {
-    // close every tab to ensure the accordion effect
-    for (c=0; c<$('.accord').length; c++){
-      var bodyId = $('.accord')[c].id.replace('header','body');
-      //console.log(bodyId);
-      $("#" + bodyId).toggle(false);
-    }
-    var id = (this.id);
-    var target = (this.id).replace('header','body');
-    $('#' + target).slideToggle('fast');
-  });
 
    // saving a station
   $('#save-button').click(function() {
@@ -74,8 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   /* Checking live results for a saved station */
-  $(document).on('click', '.result-button', function () {
-    var stationId = $(this).parents().eq(2).attr('data-station-id');
+  $(document).on('click', '.saved-result', function () {
+    // var stationId = $(this).parents().eq(2).attr('data-station-id');
+    var stationId = $(this).attr('data-station-id');
+    console.log(stationId);
     $('#search-form').toggle(true);
     $('#user-form').toggle(false);
     $('#search-form-button').addClass('active');
@@ -95,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   /* Delete an Individual Station */
-  $(document).on('click', '.delete-button', function () {
-    var stationId = $(this).parents().eq(2).attr('data-station-id')
+  $(document).on('click', 'span.clickable', function (e) {
+    var stationId = $(this).parents().eq(0).attr('data-station-id');
     chrome.storage.sync.get(['savedRoutes'], function(data) {
       var newRoutes = data['savedRoutes'];
       delete newRoutes[stationId];

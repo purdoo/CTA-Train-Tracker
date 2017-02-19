@@ -4,23 +4,36 @@ body {
   width:300px;
 }
 
+.container-form {
+  padding-bottom: 20px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable .glyphicon {
+  background: rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  padding: 1px 1px;
+  border-radius: 4px;
+  z-index : 1000;
+}
+
+a.clickable { color: inherit; }
+
 .borderless {
   padding: 0px;
   margin: 0px;
 }
-/*
-hr-borderless {
-  border: 0;
-  border-top: 1px solid #eeeeee;
-}
-*/
+
 #connect {
   margin-bottom: 20px;
 }
 
-#search-form {
+/*#search-form {
   margin-bottom: 20px;
-}
+}*/
 
 .results {
   padding-top: 20px;
