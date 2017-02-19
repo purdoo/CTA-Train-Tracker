@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var resultsHtml = '<h4>' + resultHeader + '</h4><hr>';
       resultsHtml += renderArrivalResults(xml);
       $('#results').html(resultsHtml + '<br>');
+      // $('#results').accordion();
     });
   });
 
@@ -70,14 +71,14 @@ function renderArrivalResults(xml) {
     var isSchedule = train.find('isSch').text();
     var isDelayed = train.find('isDly').text();
     var isFaulty = train.find('isFlt').text();
-
     // building result header
     if(isApproaching == '1') {
       timeOut = 'Due';
     }
     var headerText =  destination + ' - ' + timeOut;
-    trainHtml += '<div class="result ' + route + '">'
-    trainHtml += '<div class="result-header" id="header-' + run + '">' + headerText + '</div>';
+
+    // trainHtml += '<div class="result ' + route + '">'
+    trainHtml += '<h5 class="result-header ' + route + '" id="header-' + run + '">' + headerText + '</h5>';
 
     // building result body
     var descriptionHtml = '<div class="arrival-desc">' + detail + '</div>';
@@ -89,10 +90,9 @@ function renderArrivalResults(xml) {
     }
     trainHtml += '<div class="result-body" id="body-' + run + '">' + descriptionHtml + arrivalHtml + scheduledNote + '</div>';
     trainHtml += '</div>';
-    trainHtml += '<hr class="borderless">';
-
     resultsHtml += trainHtml;
   });
+
   return resultsHtml;
 }
 

@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
       var resultsHtml = '<br>';
       resultsHtml += renderArrivalResults(xml);
       $('#results').html(resultsHtml + '<br>');
-
     });
   });
 
